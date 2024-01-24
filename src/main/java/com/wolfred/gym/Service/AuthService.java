@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.wolfred.gym.Dto.CreateUserAdminRequestDTO;
 import com.wolfred.gym.Dto.SignUpDto;
 import com.wolfred.gym.Models.User;
 import com.wolfred.gym.Repository.UserRepository;
@@ -27,6 +28,18 @@ public class AuthService implements UserDetailsService {
   public UserDetails signUp(SignUpDto data){
     if (repository.findByEmail(data.email()) != null) {
         return null;
+    }
+    String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+    User newUser = new User();
+    newUser.setEmail(data.email());
+    newUser.setPassword(encryptedPassword);
+    newUser.setRole(data.role());
+    return repository.save(newUser);
+  }
+
+  public UserDetails CreateUserAdmin(CreateUserAdminRequestDTO data){
+    if (repository.findByEmail(data.email()) != null) {
+      return null;
     }
     String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
     User newUser = new User();
