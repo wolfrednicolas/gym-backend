@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wolfred.gym.Dto.ClubDto;
+import com.wolfred.gym.Dto.ClubRequestDTO;
+import com.wolfred.gym.Dto.ClubResponseDTO;
 import com.wolfred.gym.Models.Club;
 import com.wolfred.gym.Repository.ClubRepository;
 import com.wolfred.gym.Service.ClubService;
@@ -28,51 +29,29 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public List<ClubDto> findAll() {
+    public List<ClubResponseDTO> findAll() {
         List<Club> clubs = this.clubRepository.findAll();
-        return clubs.stream().map((club) -> mapToClubDto(club)).collect(Collectors.toList());
-    }
-
-    private ClubDto mapToClubDto(Club club){
-        return ClubDto.builder()
-                .id(club.getId()) 
-                .title(club.getTitle())
-                .photoUrl(club.getPhotoUrl())
-                .content(club.getContent())
-                .createdOn(club.getCreatedOn())  
-                .updateOn(club.getUpdateOn())                   
-                .build();
-    }
-
-    private Club mapToClub(ClubDto clubdDto){
-        return Club.builder()
-                .id(clubdDto.getId()) 
-                .title(clubdDto.getTitle())
-                .photoUrl(clubdDto.getPhotoUrl())
-                .content(clubdDto.getContent())
-                .createdOn(clubdDto.getCreatedOn())  
-                .updateOn(clubdDto.getUpdateOn())                   
-                .build();
+        return clubs.stream().map((club) -> this.modelMapper.map(club, ClubResponseDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public void create(ClubDto clubDto) {
-        this.clubRepository.save(mapToClub(clubDto));
+    public void create(ClubRequestDTO clubRequestDTO) {
+        this.clubRepository.save(this.modelMapper.map(clubRequestDTO, Club.class));
     }
 
     @Override
-    public ClubDto find(long id) {
+    public ClubResponseDTO find(long id) {
         Optional<Club> find = this.clubRepository.findById(id);
         if(find.isEmpty()) return null;
 
-        return this.modelMapper.map(this.clubRepository.findById(id).get(), ClubDto.class);
+        return this.modelMapper.map(this.clubRepository.findById(id).get(), ClubResponseDTO.class);
     }
 
     @Override
-    public ClubDto update(long id, ClubDto clubDto) {
-        Club club = mapToClub(clubDto);
+    public ClubResponseDTO update(long id, ClubRequestDTO clubRequestDTO) {
+        Club club = this.modelMapper.map(clubRequestDTO, Club.class);
         club.setId(id);
-        return mapToClubDto(this.clubRepository.save(club));
+        return this.modelMapper.map(club, ClubResponseDTO.class);
     }
 
     @Override
