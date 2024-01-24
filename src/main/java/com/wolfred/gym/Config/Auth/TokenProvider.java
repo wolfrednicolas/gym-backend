@@ -39,11 +39,12 @@ public class TokenProvider {
           .verify(token)
           .getSubject();
     } catch (JWTVerificationException exception) {
-      throw new JWTVerificationException("Error while validating token", exception);
+      System.out.println("entra al catch");
+      throw new JWTVerificationException("Error while validating token", exception.getCause());
     }
   }
 
   private Instant genAccessExpirationDate() {
-    return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    return LocalDateTime.now().plusHours(24).toInstant(ZoneOffset.of("-05:00"));
   }
 }
