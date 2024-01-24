@@ -39,7 +39,6 @@ public class TokenProvider {
           .verify(token)
           .getSubject();
     } catch (JWTVerificationException exception) {
-      System.out.println("entra al catch");
       throw new JWTVerificationException("Error while validating token", exception.getCause());
     }
   }
