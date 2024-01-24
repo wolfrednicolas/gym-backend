@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ClubDto {
+public class ClubRequestDTO {
     private Long id;
     @NotEmpty(message = "Club title should not be empty")
     private String title;
@@ -18,7 +18,7 @@ public class ClubDto {
     private String content;
     @NotEmpty(message = "Address should not be empty")
     private String address;
-    
+
     private LocalDateTime createdOn;
     private LocalDateTime updateOn;
 }
