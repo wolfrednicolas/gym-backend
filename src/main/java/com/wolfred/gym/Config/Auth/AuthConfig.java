@@ -28,8 +28,7 @@ public class AuthConfig {
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/api/signup").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
-            //.requestMatchers(HttpMethod.POST, "/api/v1/books").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.GET, "/api/clubs/**").permitAll()
+            .requestMatchers( "/api/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated())
         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
