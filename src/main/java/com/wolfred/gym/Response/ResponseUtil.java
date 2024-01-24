@@ -10,19 +10,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResponseUtil {
-    static Map<String, Object> response = new HashMap<>();
 
+    static Map<String, Object> response = new HashMap<>();
     public static ResponseEntity<?> statusOkResponse(Object data) {
+        
         response.put("data", data);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     public static ResponseEntity<?> statusCreatedResponse() {
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     public static ResponseEntity<?> statusUnauthorizedResponse() {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     public static ResponseEntity<?> statusUnauthorizedResponse(Object data) {
@@ -30,12 +31,12 @@ public class ResponseUtil {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
-    public static ResponseEntity<?> statusUnprocessableEntityResponse(Object data) {
-        response.put("error", data);
+    public static ResponseEntity<?> statusUnprocessableEntityResponse(BindingResult data) {
+        response.put("errors", getValidationErrors(data));
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
     }
 
-    public static ResponseEntity<?> statusNotFoundEntityResponse(Object data) {
+    public static ResponseEntity<?> statusNotFoundEntityResponse(String data) {
         response.put("error", data);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
