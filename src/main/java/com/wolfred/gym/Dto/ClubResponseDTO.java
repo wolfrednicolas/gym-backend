@@ -1,10 +1,10 @@
 package com.wolfred.gym.Dto;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class ClubResponseDTO {
     private Long id;
     private String title;
