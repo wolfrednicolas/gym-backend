@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class AuthController {
   @Autowired
   private AuthenticationManager authenticationManager;
@@ -50,14 +52,16 @@ public class AuthController {
     if(result.hasErrors()){
         return ResponseUtil.statusBadRequestResponse(result);
     }
+    Map<String, Object> response = new HashMap<>();
+    response.clear();
     var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
     try {
         var authUser = authenticationManager.authenticate(usernamePassword);
         User user = (User)authUser.getPrincipal();
         var accessToken = tokenService.generateAccessToken(user);
-        Map<String, Object> response = new HashMap<>();
         response.put("user_id", user.getId());
         response.put("accessToken", accessToken);
+        response.put("role", user.getRole());
         return ResponseUtil.statusOkResponse(response);
     } catch (AuthenticationException e) {
         return ResponseUtil.statusUnauthorizedResponse("Email or Password incorrect");
