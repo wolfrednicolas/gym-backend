@@ -73,5 +73,9 @@ public class AdminController {
     public ResponseEntity<?> listUsers() throws Exception {
         return ResponseUtil.statusOkResponse(userService.findByRoleNot(UserRole.ADMIN));
     }
+    @GetMapping("/customers/{id}")
+    public ResponseEntity<?> getUser(@PathVariable("id") long id) throws Exception {
+        return ResponseUtil.statusOkResponse(userService.getUser(id));
+    }
 
 }

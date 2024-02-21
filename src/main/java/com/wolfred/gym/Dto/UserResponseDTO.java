@@ -11,4 +11,7 @@ public class UserResponseDTO {
         this.id = id;
         this.email = email;
     }
+    public UserResponseDTO() {
+
+    }
 }

@@ -9,4 +9,5 @@ import com.wolfred.gym.Enums.UserRole;
 public interface UserService {
     List<UserResponseDTO> findAll();
     List<UserResponseDTO> findByRoleNot(UserRole excludedRole);
+    UserResponseDTO getUser(Long id);
 }

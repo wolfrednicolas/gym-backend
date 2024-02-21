@@ -1,6 +1,7 @@
 package com.wolfred.gym.Service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -33,6 +34,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponseDTO> findByRoleNot(UserRole excludedRole) {
         return this.userRepository.findByRoleNot(excludedRole);
+    }
+    @Override
+    public UserResponseDTO getUser(Long id) {
+        Optional<User> user = this.userRepository.findById(id);
+
+        if(user.isEmpty()) return null;
+
+        return this.modelMapper.map(user, UserResponseDTO.class);
     }
     
 }
