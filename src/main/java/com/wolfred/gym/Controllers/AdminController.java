@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wolfred.gym.Dto.ClubRequestDTO;
 import com.wolfred.gym.Dto.CreateUserAdminRequestDTO;
+import com.wolfred.gym.Enums.ErrorResponse;
 import com.wolfred.gym.Enums.UserRole;
 import com.wolfred.gym.Response.ResponseUtil;
 import com.wolfred.gym.Service.AuthService;
@@ -44,7 +45,7 @@ public class AdminController {
         return ResponseUtil.statusBadRequestResponse(result);
         }
         if(service.CreateUserAdmin(data) == null){
-        return ResponseUtil.statusConflictResponse("User with the provided email already exists.");
+            return ResponseUtil.statusConflictResponse(ErrorResponse.UserWithProvidedEmailAlreadyExists.getMessage());
         }
         return ResponseUtil.statusCreatedResponse();
     }
