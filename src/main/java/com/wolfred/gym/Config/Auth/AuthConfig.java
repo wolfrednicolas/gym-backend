@@ -28,6 +28,7 @@ public class AuthConfig {
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/api/signup").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
+            .requestMatchers("/api/check/**").permitAll()
             .requestMatchers( "/api/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated())
         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
