@@ -11,4 +11,7 @@ public class ClubResponseDTO {
     private String photoUrl;
     private String content;
     private String address;
+    private String city;
+    private String state;
+    private String zipcode;
 }

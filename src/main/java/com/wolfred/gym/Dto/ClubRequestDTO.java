@@ -18,6 +18,12 @@ public class ClubRequestDTO {
     private String content;
     @NotEmpty(message = "Address should not be empty")
     private String address;
+    @NotEmpty(message = "City should not be empty")
+    private String city;
+    @NotEmpty(message = "State should not be empty")
+    private String state;
+    @NotEmpty(message = "Zip code should not be empty")
+    private String zipCode;
 
     private LocalDateTime createdOn;
     private LocalDateTime updateOn;

@@ -32,6 +32,9 @@ public class Club {
     private String photoUrl;
     private String content;
     private String address;
+    private String city;
+    private String state;
+    private String zipCode;
 
     @CreationTimestamp
     @Column(updatable = false)
